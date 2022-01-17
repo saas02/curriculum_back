@@ -13,7 +13,8 @@ const UsuarioSchema = Schema({
         type: String
     },    
     password:{
-        type: String
+        type: String,
+        required: [true, 'La contraseña es obligatoria'],
     },
     email: {
         type: String,

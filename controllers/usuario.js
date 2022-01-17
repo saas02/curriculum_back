@@ -77,9 +77,7 @@ const usuariosPut = async (req, res = response)  => {
 
 const usuariosDelete = async (req, res = response)  => {
 
-    const { id } = req.params;
-
-    const uid = req.uid;
+    const { id } = req.params;    
 
     /** para eliminar */
     //const usuario = await Usuario.findByIdAndDelete( id );
@@ -87,10 +85,13 @@ const usuariosDelete = async (req, res = response)  => {
     /** para actualizar el estado */
     const usuario = await Usuario.findByIdAndUpdate( id, { state: false } );
 
+    const usuarioAutenticado = req.usuario;
+
 
     res.json({
         msg:" delete API Controller",
-        id
+        usuario,
+        usuarioAutenticado
     })
 }
 
