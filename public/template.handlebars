@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>CV!</title>
+  </head>
+  <body>
+    <h1>Hoja de Vida!!!</h1>         
+        
+        {{#with usuarios as | usuario |}}
+          <img src="{{usuario.imageProfile}}" alt="{{usuario.name}}"><br>
+                             
+          <b>Nombre:</b> {{usuario.name}} <br>
+          <b>Edad:</b> {{usuario.age}} <br>
+          <b>Phone:</b> {{usuario.phone}} <br>  
+          <b>Email:</b> {{usuario.email}} <br>  
+
+          {{#with usuario.profile as | profile |}}
+              <b>
+                {{profile.name}} ({{profile.timeExperience}} years of experience).
+              </b>
+              <br><br>
+          {{/with}}
+            
+          {{#with usuario.items as | item |}}
+            {{#if item.skills}}
+              <b>Skills:</b>
+              <ul>
+                {{#each item.skills as | skill |}}
+                  <li>{{ skill.name }} {{ skill.experience }}</li>
+                {{/each}}
+              </ul>
+            {{/if}}
+
+            {{#if item.experiences}}
+              <b>Experiences:</b>
+              <ul>
+                {{#each item.experiences as | experience |}}
+                  <li>{{ experience.company }} {{ experience.position }} {{ experience.functions }}</li>
+                {{/each}}
+              </ul>
+            {{/if}}
+
+            {{#if item.educations}}
+              <b>Educations:</b>
+              <ul>
+                {{#each item.educations as | education |}}
+                  <li>{{ education.institution }} {{ education.title }} {{ education.description }}</li>
+                {{/each}}
+              </ul>
+            {{/if}}
+
+          {{/with}}
+        {{/with}}
+    
+  </body>
+</html>
