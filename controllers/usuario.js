@@ -107,32 +107,44 @@ const usuariosDoc = async (req, res = response)  => {
         fs.mkdirSync(folder);
     }
 
-    
-    
-    let fileName = "/"+id+'.pdf';    
-    
-    let document = {
-        html: html,
-        data: {
-            usuarios: usuario
-        },
-        path: folder+fileName,
-        type: "",
-    };    
+    let fileName = "/"+id+'.pdf';        
+    var resultFile   = {};
 
-    let result = pdf.create(document, options)
-      .then((res) => {
-        console.log(res);          
-        return res;
-      })
-      .catch((error) => {  
-        console.log(error);      
-        return error;
-      });
+    try {
+            
+        let document = {
+            html: html,
+            data: {
+                usuarios: usuario
+            },
+            path: folder+fileName,
+            type: "",
+        };    
+
+    
+        let result = await pdf.create(document, options)
+            .then((res) => {
+                console.log(res);               
+                return res;
+            })
+            .catch((error) => {  
+                console.log(error);        
+                resultFile = {
+                    error: error
+                };          
+                return error;
+            });        
+    } catch (error) {
+        resultFile = {
+            error: error
+        };  
+    }
+    
 
     res.json({
         msg: " put API Controller****",
-        url: '/cv'+fileName        
+        url: '/cv'+fileName,
+        result: resultFile
     })
 
 

@@ -36,7 +36,7 @@
               <b>Experiences:</b>
               <ul>
                 {{#each item.experiences as | experience |}}
-                  <li>{{ experience.company }} {{ experience.position }} {{ experience.functions }}</li>
+                  <b>{{ experience.company }} ( {{ experience.position }} )</b> {{{ experience.functions }}}<br>
                 {{/each}}
               </ul>
             {{/if}}
@@ -45,7 +45,7 @@
               <b>Educations:</b>
               <ul>
                 {{#each item.educations as | education |}}
-                  <li>{{ education.institution }} {{ education.title }} {{ education.description }}</li>
+                  <b>{{ education.institution }} ( {{ education.title }} ) : </b> {{ education.description }}<br><br>
                 {{/each}}
               </ul>
             {{/if}}
