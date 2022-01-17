@@ -51,7 +51,7 @@ const usuariosPost = async (req, res = response)  => {
 }
 
 const usuariosPut = async (req, res = response)  => {
-    console.log("aca");
+    
     const { id } = req.params;
     const { _id, ...data } = req.body;
 
