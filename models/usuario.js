@@ -24,8 +24,8 @@ const UsuarioSchema = Schema({
     phone:{
         type: String
     },
-    aboutMe:{
-        type: String
+    about:{
+        type: Object
     },
     url:{
         type: String
