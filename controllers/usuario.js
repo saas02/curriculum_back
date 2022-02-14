@@ -1,9 +1,19 @@
 const { response, request } = require('express');
 const brcyptjs = require('bcryptjs');
-const Usuario = require("./../models/usuario");
-
+const Handlebars = require("handlebars");
 const pdf = require("pdf-creator-node");
 const fs = require("fs");
+
+const Usuario = require("./../models/usuario");
+const { _isValid, _differenceYears } = require('./../helpers/handlebars-functions');
+
+Handlebars.registerHelper('isValid', function (value, value2) {    
+    return _isValid(value, value2);
+});
+
+Handlebars.registerHelper('differenceYears', function (data) {    
+    return _differenceYears(data);
+});    
 
 // Read HTML Template
 const html = fs.readFileSync("public/template.handlebars", "utf8");
@@ -97,21 +107,20 @@ const usuariosDelete = async (req, res = response)  => {
 
 const usuariosDoc = async (req, res = response)  => {
 
-    let { id } = req.params;    
-
+    let { id } = req.params;
+    let fileLanguage = ( req.body.fileLanguage ) ? req.body.fileLanguage : 'es';
     let usuario = await Usuario.findById( id ).lean() 
-
+    usuario.fileLanguage = fileLanguage
     let folder = 'public/cv/';
 
     if (!fs.existsSync(folder)) {
         fs.mkdirSync(folder);
-    }
-
-    let fileName = "/"+id+'.pdf';        
+    }        
+    let fileName = `/${id}-${fileLanguage}.pdf`;
     var resultFile   = {};
 
     try {
-            
+         
         let document = {
             html: html,
             data: {

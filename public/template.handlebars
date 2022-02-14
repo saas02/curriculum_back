@@ -2,50 +2,102 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>CV!</title>
+    <title>CV!</title>    
   </head>
   <body>
-    <h1>Hoja de Vida!!!</h1>         
+    <h1>Curriculum Vitae</h1>         
         
         {{#with usuarios as | usuario |}}
-          <img src="{{usuario.imageProfile}}" alt="{{usuario.name}}"><br>
-                             
-          <b>Nombre:</b> {{usuario.name}} <br>
-          <b>Edad:</b> {{usuario.age}} <br>
-          <b>Phone:</b> {{usuario.phone}} <br>  
-          <b>Email:</b> {{usuario.email}} <br>  
 
-          {{#with usuario.profile as | profile |}}
-              <b>
-                {{profile.name}} ({{profile.timeExperience}} years of experience).
-              </b>
-              <br><br>
-          {{/with}}
+          <table>
+            <tr>
+              <td style="width:50%;">
+                <img src="{{usuario.imageProfile}}" width="50%" height="20%" alt="{{usuario.name}}"><br><br>
+                <b>Name / Nombre:</b> {{usuario.name}} <br>
+                <b>Age / Edad:</b> {{usuario.age}} <br>
+                <b>Phone / Teléfono:</b> {{usuario.phone}} <br>  
+                <b>Email:</b> {{usuario.email}} <br>
+                {{#with usuario.profile as | profile |}}
+                    <b>
+                      {{profile.name}} ({{profile.timeExperience}} years of experience).
+                    </b>
+                    <br><br>
+                {{/with}}
+              </td>
+              <td style="width:50%;">
+                {{#with usuario.items as | item |}}
+                  {{#if item.skills}}
+                    <b>Professional Skills / Habilidades Profesionales:</b>
+                    <ul>
+                      {{#each item.skills as | skill |}}                        
+                        <li>{{ skill.name }} ( {{ differenceYears skill.experience }} Years / años)</li>
+                      {{/each}}
+                    </ul>
+                  {{/if}}
+                {{/with}}     
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2"></td>
+            </tr>
+            <tr>
+              <td colspan="2">                
+                  {{#with usuario.about.about as | abouts |}}                  
+                    {{#each abouts as | about |}}
+                      {{#if (isValid about.code usuario.fileLanguage)}}  
+                        {{{ about.data }}} 
+                      {{/if}}
+                    {{/each}}                  
+                  {{/with}}                 
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2"></td>
+            </tr>
+          </table>
             
-          {{#with usuario.items as | item |}}
-            {{#if item.skills}}
-              <b>Skills:</b>
-              <ul>
-                {{#each item.skills as | skill |}}
-                  <li>{{ skill.name }} {{ skill.experience }}</li>
-                {{/each}}
-              </ul>
-            {{/if}}
+          {{#with usuario.items as | item |}}            
 
             {{#if item.experiences}}
-              <b>Experiences:</b>
-              <ul>
-                {{#each item.experiences as | experience |}}
-                  <b>{{ experience.company }} ( {{ experience.position }} )</b> {{{ experience.functions }}}<br>
-                {{/each}}
+              <b>Experience Work / Experiencia Laboral:</b><br><br>                
+              {{#each item.experiences as | experience |}}
+              <b>{{ experience.company }}</b>              
+              <ul>                  
+                  {{#with experience.functions as | functions |}}                      
+                      {{#each functions as | function |}}                        
+                        {{#if (isValid function.code usuario.fileLanguage)}}                            
+                            {{{function.data}}}                        
+                        {{/if}}  
+                      {{/each}}
+                  {{/with}}                
               </ul>
+              {{/each}}                      
             {{/if}}
 
             {{#if item.educations}}
-              <b>Educations:</b>
+              <b>Education / Educación:</b>
               <ul>
                 {{#each item.educations as | education |}}
-                  <b>{{ education.institution }} ( {{ education.title }} ) : </b> {{ education.description }}<br><br>
+                  
+                  <b>
+                    {{ education.institution }}
+                    {{#with education.title as | titles |}}                      
+                        {{#each titles as | title |}}                        
+                          {{#if (isValid title.code usuario.fileLanguage)}}                            
+                              ({{{title.data}}})
+                          {{/if}}  
+                        {{/each}}
+                    {{/with}} 
+                  </b>
+                  <ul>                  
+                      {{#with education.description as | descriptions |}}                      
+                          {{#each descriptions as | description |}}                        
+                            {{#if (isValid description.code usuario.fileLanguage)}}                            
+                                {{{description.data}}}
+                            {{/if}}  
+                          {{/each}}
+                      {{/with}}                
+                  </ul>
                 {{/each}}
               </ul>
             {{/if}}
