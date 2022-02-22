@@ -1,0 +1,337 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Include data to cv info",
+        "version": "1.0.0",
+        "title": "Cv Api",
+        "contact": {
+            "name": "s.amaya",
+            "url": "https://s.amaya.com",
+            "email": "saas02@s.amaya.com"
+        }
+    },
+    "host": "localhost:8001",
+    "basePath": "/v1/api",
+    "schemes": [
+        "http",
+        "https"
+    ],
+    "servers": [
+        {
+            "url": "localhost:8001/",
+            "description" : "Local Server"
+        },
+        {
+            "url": "pruebanodejs.amarreyamores.com.co/",
+            "description" : "Production Server"
+        }
+    ],
+    "paths": {
+        "/auth/login":{
+            "post":{
+                "tags": [
+                    "Users Login"
+                ],
+                "summary": "User Login",
+                "description": "",
+                "operationId": "userLogin",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],            
+                "parameters": [                    
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "user body data",
+                        "required": false,
+                        "type": "string",
+                        "schema": {
+                            "$ref": "#/definitions/UserLogin"
+                        }
+                    }
+                ],
+                "responses": {
+                    "405": {
+                        "description": "Invalid input"
+                    }
+                }
+            }
+        },
+        "/usuarioscv": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Obtain all users in DB",
+                "description": "",
+                "operationId": "getUsers",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "405": {
+                        "description": "Invalid input"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Create user data",
+                "description": "",
+                "operationId": "createUser",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [                    
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "user body data",
+                        "required": false,
+                        "type": "string",
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    }
+                ],
+                "responses": {
+                    "405": {
+                        "description": "Invalid input"
+                    },
+                    "404": {
+                        "description": "Error in Body"
+                    }
+                }
+            }
+        },
+        "/usuarioscv/{userId}": {
+            "put": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Updated user data",
+                "description": "",
+                "operationId": "updateUser",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "userId",
+                        "description": "Updated userId data",
+                        "type": "string",
+                        "required": true
+                    },
+                    {
+                        "in": "header",
+                        "name": "x-token",
+                        "description": "token",
+                        "type": "string",
+                        "required": true
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "user body data",
+                        "required": false,
+                        "type": "string",
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    }
+                ],
+                "responses": {
+                    "405": {
+                        "description": "Invalid input"
+                    }
+                }
+            }            
+        }        
+    },
+    "definitions": {
+        "UserLogin":{
+            "type": "object",
+            "properties":{
+                "email":{
+                    "type": "string"
+                },
+                "password":{
+                    "type": "string"
+                }
+            }
+        },
+        "User": {
+            "type": "object",
+            "required": [
+                "name",
+                "age",
+                "email"
+            ],
+            "properties":{
+                "name":{
+                    "type": "string"
+                },
+                "age":{
+                    "type": "integer"
+                },
+                "address":{
+                    "type": "string"                    
+                },
+                "email":{
+                    "type": "string"
+                },
+                "phone":{
+                    "type": "integer"
+                },
+                "password":{
+                    "type": "string"
+                },
+                "about":{
+                    "type": "object",
+                    "$ref": "#/definitions/about"
+                },
+                "url": {
+                    "type": "string"
+                },
+                "language": {
+                    "type": "string"
+                },
+                "imageProfile": {
+                    "type": "string"
+                },
+                "items":{
+                    "type": "object",
+                    "$ref": "#/definitions/profile"
+                }
+            }
+        },
+        "about": {
+            "type": "object",
+            "properties":{
+                "about":{
+                    "$ref": "#/definitions/data"               
+                }                
+            }
+        },
+        "profile": {
+            "type": "object",
+            "properties":{
+                "profile":{
+                    "type": "object",
+                    "properties":{
+                        "name":{
+                            "type": "string"                    
+                        },
+                        "timeExperience":{
+                            "type": "string"
+                        }
+                    }                    
+                },
+                "skills":{
+                    "type": "object",
+                    "$ref": "#/definitions/skills"                   
+                },
+                "experiences":{
+                    "type": "object",
+                    "$ref": "#/definitions/experiences"                   
+                },
+                "educations":{
+                    "type": "object",
+                    "$ref": "#/definitions/educations"                   
+                }                           
+            }
+        },
+        "skills": {
+            "type": "object",
+            "properties":{                
+                "name":{
+                    "type": "string"                    
+                },
+                "experience":{
+                    "type": "integer"
+                },
+                "percentage":{
+                    "type": "integer"
+                }                  
+            }
+        },
+        "experiences": {
+            "type": "object",
+            "properties":{                
+                "company":{
+                    "type": "string"                    
+                },
+                "position":{
+                    "type": "object",
+                    "$ref": "#/definitions/position"
+                },
+                "functions":{
+                    "type": "object",
+                    "$ref": "#/definitions/functions"
+                },
+                "start":{
+                    "type": "string"                    
+                },
+                "end":{
+                    "type": "string"                    
+                },
+                "order":{
+                    "type": "integer"                    
+                }              
+            }
+        },
+        "position": {
+            "type": "object",
+            "$ref": "#/definitions/data"
+        },
+        "functions": {
+            "type": "object",
+            "$ref": "#/definitions/data"
+        },
+        "educations": {
+            "type": "object",
+            "properties":{                
+                "institution":{
+                    "type": "string"                    
+                },
+                "title":{
+                    "type": "object",
+                    "$ref": "#/definitions/data"
+                },
+                "description":{
+                    "type": "object",
+                    "$ref": "#/definitions/data"
+                }                          
+            }
+        },
+        "data": {
+            "type": "object",
+            "properties":{ 
+                "code":{
+                    "type": "string"                    
+                },
+                "data":{
+                    "type": "string"                    
+                }
+            }
+        }
+    },
+    "apis": [
+        "./routes/*.js"
+    ]
+}

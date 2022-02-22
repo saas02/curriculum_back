@@ -19,7 +19,7 @@ const login = async (req = request, res = response)  => {
             })
         }
 
-        if( !usuario.state ){
+        if( !usuario.status ){
             /** Validar estado del usuario */
             return res.status(400).json({
                 msg: "(Usuario) / Password no con correctos -- estado"

@@ -31,6 +31,7 @@ router.post(usuariosPath, [
 ] ,usuariosPost );
 
 router.put(usuariosPath+":id",  [
+    validarJwt,
     check('id', 'No es un Id valido').isMongoId(),
     check('id').custom( existeUsuarioId ),    
     validarCampos    

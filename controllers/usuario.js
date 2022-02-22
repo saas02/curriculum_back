@@ -27,7 +27,7 @@ const options = {
 const usuariosGet = async (req = request, res = response)  => {
     
     const { limite = 5, desde = 0 } = req.query;
-    const query = { state: true };
+    const query = { status: true };
     
     const [ total, usuarios ] = await Promise.all([
         /** Se coloca el await para esperar la salida de las dos query */
@@ -93,7 +93,7 @@ const usuariosDelete = async (req, res = response)  => {
     //const usuario = await Usuario.findByIdAndDelete( id );
 
     /** para actualizar el estado */
-    const usuario = await Usuario.findByIdAndUpdate( id, { state: false } );
+    const usuario = await Usuario.findByIdAndUpdate( id, { status: false } );
 
     const usuarioAutenticado = req.usuario;
 

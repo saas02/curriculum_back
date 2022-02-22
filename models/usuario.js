@@ -53,7 +53,7 @@ const UsuarioSchema = Schema({
             type: Object
         }
     },
-    state: {
+    status: {
         type:Boolean,
         default: true
     }
